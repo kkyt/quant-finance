@@ -1,0 +1,5 @@
+gevent>=1.0
+
+git+ssh://git@git.agutong.com:5678/GeneralLibrary/pyutils.git
+git+ssh://git@git.agutong.com:5678/OpenSource/compago.git
+git+ssh://git@git.agutong.com:5678/OpenSource/zerorpc-python.git
