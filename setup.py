@@ -27,7 +27,6 @@ setup(
     ],
 
     scripts=[
-        'bin/quant-finance'
     ],
 
     install_requires=[
