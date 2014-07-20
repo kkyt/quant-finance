@@ -1,34 +1,61 @@
 #coding: utf8
 
+from kuankr_utils import log, debug
+from kuankr_utils.open_struct import DefaultOpenStruct
+
+from .transaction import Transaction
+
 class InvalidOrder(StandardError):
     pass
 
-class Order(dict):
-    pass
-
-def required_commission(self, commission):
-    txn = self.to_transaction()
-    return commission(txn)
-
-def to_transaction(odr):
-    return {
-        'symbol': odr['symbol'],
-        'amount': odr['amount'],
-        'price': get_price(odr),
+class Order(DefaultOpenStruct):
+    """
+    买卖单子
+    """
+    defaults = {
+        'symbol': None,
+        'amount': 0,
+        'cost': 0,
+        'commission': 0,
+        'price': None,
+        'direction': 1,
+        'limit_price': None,
+        'time': None
     }
 
-def get_price(odr):
-    return odr.get('price') or odr.get('limit_price')
+    def get_price(self):
+        if 'price' in self:
+            return self['price']
+        else:
+            return self.get('limit_price')
 
-def validate(odr):
-    if not 'symbol' in odr:
-        raise InvalidOrder("symbol is missing")
+    def transaction_cash(self):
+        return self.get_price() * self.amount
 
-    if get_price(odr) is None:
-        raise InvalidOrder("price required")
+    def required_cash(self):
+        tc = self.transaction_cash()
+        c = self.commission
+        return max(tc + c, 0)
 
-    if not odr.get('amount'):
-        raise InvalidOrder("amount is missing or zero")
+    def required_amount(self):
+        if self.amount > 0:
+            #buy
+            return 0
+        else:
+            #sell
+            return -self.amount
 
-    return True
+    def to_transaction(self):
+        t = {
+            'symbol': self.get('symbol'),
+            'amount': self.get('amount'),
+            'price': self.get_price()
+        }
+        if 'commission' in self:
+            t['commission'] = self['commission']
+        return Transaction(t)
+
+    def validate(self):
+        if self.get_price() is None:
+            raise InvalidOrder("price required")
 
