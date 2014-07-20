@@ -7,11 +7,13 @@ class DefaultLotter(Lotter):
     def __init__(self, min_lot=100):
         self.min_lot = min_lot
 
-    def __call__(self, amount):
-        if amount>0:
+    def __call__(self, order):
+        m = order.amount
+        if m>0:
             #buy at a minimum lot
-            return int(amount)/self.min_lot * self.min_lot
+            order.amount = int(m)/self.min_lot * self.min_lot
         else:
             #sell no restriction
-            return int(amount)
+            order.amount = int(m)
+
 

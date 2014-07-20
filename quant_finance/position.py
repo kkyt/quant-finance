@@ -76,6 +76,7 @@ class Position(DefaultOpenStruct):
         self.commission += txn.commission
         self.cost += txn.total_cost()
         self.reserved -= txn.required_amount()
+        self.price = txn.price
 
         #TODO:?
         #we're covering a short or closing a position

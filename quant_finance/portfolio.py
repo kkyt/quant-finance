@@ -54,13 +54,12 @@ class Portfolio(object):
     def change_cash(self, d):
         self.cash += d
 
-    def handle_bars(self, bars):
-        for bar in bars:
-            s = bar['symbol']
-            p = bar['close']
-            if p is not None and s in self.positions:
-                self.positions[s].price = p
-                self.positions[s].time = bar['time']
+    def handle_bar(self, bar):
+        s = bar['symbol']
+        p = bar['close']
+        if p is not None and s in self.positions:
+            self.positions[s].price = p
+            self.positions[s].time = bar.get('time')
 
     def handle_transaction(self, txn):
         self.positions.handle_transaction(txn)

@@ -13,6 +13,7 @@ class Order(DefaultOpenStruct):
     买卖单子
     """
     defaults = {
+        'action': None,
         'symbol': None,
         'amount': 0,
         'cost': 0,

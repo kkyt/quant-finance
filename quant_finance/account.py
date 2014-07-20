@@ -1,6 +1,6 @@
 from kuankr_utils import log, debug
 
-from quant_finance import odr, transaction, position
+from .order import InvalidOrder
 
 class Account(object):
     def __init__(self, portfolio=None, commission=None, margin=None, lotter=None):
@@ -26,6 +26,11 @@ class Account(object):
             else:
                 #TODO when current amount < 0?
                 odr.amount = -positions.available_amount(odr.symbol)
+        if not odr.action:
+            if odr.amount > 0:
+                odr.action = 'buy'
+            else:
+                odr.action = 'sell'
 
     def validate_order(self, odr):
         odr.commission = self.commission(odr.to_transaction())
@@ -36,8 +41,8 @@ class Account(object):
         self.normalize_order(odr)
         self.validate_order(odr)
 
-        odr = self.lotter(odr)
-        odr.validate(odr)
+        self.lotter(odr)
+        odr.validate()
 
         self.portfolio.handle_order(odr)
         return odr

@@ -1,5 +1,7 @@
+#coding: utf8
 
 from kuankr_utils import log, debug
+
 
 """
 保证金
@@ -8,11 +10,11 @@ from kuankr_utils import log, debug
 
 class Margin(object):
     def check(self, odr, ptf):
-        act = odr['action']
-        amount = odr['amount']
-        price = order.get_price(odr)
+        act = odr.action
+        amount = odr.amount
+        price = odr.get_price()
 
-        cash = ptf.available_cash() - odr.get('commission', 0)
+        cash = ptf.available_cash() - odr.commission
         if cash < 0:
             return False
 
@@ -20,7 +22,7 @@ class Margin(object):
             return amount <= cash/price
 
         elif act=='sell':
-            return -amount <= ptf.available_amount(odr['symbol']
+            return -amount <= ptf.available_amount(odr.symbol)
 
         else:
             return False
