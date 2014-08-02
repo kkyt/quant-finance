@@ -4,7 +4,7 @@ from kuankr_utils import log, debug
 
 from .transaction import Transaction
 from .positions import Positions
-from .order import Order
+from .order import Order, InvalidOrder
 
 class Portfolio(object):
     def __init__(self, cash=0.0):
@@ -24,7 +24,7 @@ class Portfolio(object):
         if p is None:
             return 0
         else:
-            position.available_amount(p)
+            return p.available_amount()
 
     def position_amount(self, symbol, default=None):
         p = self.positions.get(symbol)

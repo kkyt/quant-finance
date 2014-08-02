@@ -29,8 +29,21 @@ class Positions(DefaultOpenStruct):
             s += p.commission
         return s
 
+    def available_amount(self, symbol):
+        p = self.get(symbol)
+        if p is None:
+            return 0
+        else:
+            return p.available_amount()
+
     def open_positions(self):
         return [p for p in self.values() if not p.is_closed()]
+
+    def is_closed(self):
+        for p in self.values():
+            if not p.is_closed():
+                return False
+        return True
 
     def handle_transaction(self, txn):
         p = self[txn.symbol]

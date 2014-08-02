@@ -19,10 +19,15 @@ class Order(DefaultOpenStruct):
         'cost': 0,
         'commission': 0,
         'price': None,
-        'direction': 1,
         'limit_price': None,
         'time': None
     }
+
+    def direction(self):
+        if self.action=='buy':
+            return 1
+        else:
+            return -1
 
     def get_price(self):
         if 'price' in self:

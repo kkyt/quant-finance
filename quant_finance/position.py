@@ -70,7 +70,7 @@ class Position(DefaultOpenStruct):
         self.reserved += odr.required_amount()
 
     def handle_transaction(self, txn):
-        self._validate_action(txn)
+        #don't validate_action for transaction
 
         self.amount += txn.amount
         self.commission += txn.commission

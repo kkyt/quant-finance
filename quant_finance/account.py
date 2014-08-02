@@ -19,13 +19,13 @@ class Account(object):
     def normalize_order(self, odr):
         p = self.portfolio
         if not 'amount' in odr:
-            if odr.direction > 0:
+            if odr.direction() > 0:
                 price = odr.get_price()
                 #TODO: commission
                 odr.amount = p.available_cash() / price
             else:
                 #TODO when current amount < 0?
-                odr.amount = -positions.available_amount(odr.symbol)
+                odr.amount = -p.positions.available_amount(odr.symbol)
         if not odr.action:
             if odr.amount > 0:
                 odr.action = 'buy'
