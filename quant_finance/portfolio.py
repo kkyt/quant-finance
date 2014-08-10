@@ -79,9 +79,13 @@ class Portfolio(object):
         self.reserved_cash += cash
 
     def validate_order(self, order):
+        #validate cash and amount using margin
+        """
         cash = order.required_cash()
         if cash > self.available_cash():
             raise InvalidOrder('not_enough_cash')
+        """
+        return True
 
     def commission(self):
         return self.positions.commission()

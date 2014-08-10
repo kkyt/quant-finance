@@ -9,7 +9,8 @@ from kuankr_utils import log, debug
 #TODO: portfolio support
 
 class Margin(object):
-    def check(self, odr, ptf):
+    def __call__(self, odr, ptf):
+        #TODO: user required_cash and required_amount
         act = odr.action
         amount = odr.amount
         price = odr.get_price()
@@ -27,7 +28,11 @@ class Margin(object):
         else:
             return False
 
-class _Margin(object):
+class MarginNoCheck(object):
+    def __call__(self, odr, ptf):
+        return True
+        
+class MarginLeverage(object):
     def __init__(self, leverage=1, allow_short=False):
         self.leverage = leverage
         self.allow_short = allow_short
