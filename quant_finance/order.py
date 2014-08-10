@@ -6,7 +6,13 @@ from kuankr_utils.open_struct import DefaultOpenStruct
 from .transaction import Transaction
 
 class InvalidOrder(StandardError):
-    pass
+    
+    def __init__(self, id, message=None):
+        if message is None:
+            message = id
+        self.id = id
+        #if not id in ['margin_check_failed','price_required', 'cash_not_enough']:
+        super(InvalidOrder, self).__init__(message)
 
 class Order(DefaultOpenStruct):
     """
@@ -55,6 +61,7 @@ class Order(DefaultOpenStruct):
         t = {
             'symbol': self.get('symbol'),
             'amount': self.get('amount'),
+            'action': self.get('action'),
             'price': self.get_price()
         }
         if 'commission' in self:
@@ -63,5 +70,5 @@ class Order(DefaultOpenStruct):
 
     def validate(self):
         if self.get_price() is None:
-            raise InvalidOrder("price required")
+            raise InvalidOrder("price_required")
 

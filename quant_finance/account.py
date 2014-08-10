@@ -35,7 +35,7 @@ class Account(object):
     def validate_order(self, odr):
         odr.commission = self.commission(odr.to_transaction())
         if not self.margin.check(odr, self.portfolio):
-            raise InvalidOrder("margin check failed")
+            raise InvalidOrder("margin_check_failed")
 
     def handle_order(self, odr):
         self.normalize_order(odr)
