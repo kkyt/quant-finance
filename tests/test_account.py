@@ -30,11 +30,21 @@ def test_simple():
     assert p.total_value()==10990
     assert p.position_value()==10000
 
+    assert p.positions['s1'].cost==10010
+
     bar = { 'symbol': 's1', 'close': 110}
     p.handle_bar(bar)
 
     assert p.total_value()==11990
 
+    o['action'] = 'sell'
+    o['amount'] = -o['amount']
+    o['price'] = 90
+    a.handle_order(o)
 
+    t = o.to_transaction()
+    a.handle_transaction(t)
+    pos = p.positions['s1']
+    assert pos.cost==1019 and pos.reserved==0
 
 
