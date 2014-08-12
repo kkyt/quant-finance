@@ -15,6 +15,7 @@ class Position(DefaultOpenStruct):
         'symbol': None,
         'amount': 0,
         'cost': 0,
+        'history_cost': 0,
         'reserved': 0,
         'commission': 0,
         'price': None,
@@ -49,7 +50,7 @@ class Position(DefaultOpenStruct):
         else:
             return p * self.amount
 
-    def profit(self):
+    def paper_profit(self):
         mv = self.market_value()
         if mv is None:
             return None
@@ -74,12 +75,13 @@ class Position(DefaultOpenStruct):
 
         self.amount += txn.amount
         self.commission += txn.commission
-        self.cost += txn.total_cost()
+        c = txn.total_cost()
+        self.cost += c
+        self.history_cost += c
         self.reserved -= txn.required_amount()
         self.price = txn.price
 
-        #TODO:?
         #we're covering a short or closing a position
-        #if(self.amount + txn.amount == 0):
-        #    self.cost = 0.0
+        if(self.amount + txn.amount == 0):
+            self.cost = 0
 

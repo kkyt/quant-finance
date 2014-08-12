@@ -40,6 +40,7 @@ def test_simple():
     o['action'] = 'sell'
     o['amount'] = -o['amount']
     o['price'] = 90
+    #NOTE: MUST handle_order before handle_transaction
     a.handle_order(o)
 
     t = o.to_transaction()

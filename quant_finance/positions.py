@@ -17,10 +17,10 @@ class Positions(DefaultOpenStruct):
             s += p.market_value() or 0.0
         return s
 
-    def profit(self):
+    def paper_profit(self):
         s = 0
         for p in self.values():
-            s += p.profit() or 0.0
+            s += p.paper_profit() or 0.0
         return s
 
     def commission(self):

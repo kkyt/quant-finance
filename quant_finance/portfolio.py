@@ -43,10 +43,13 @@ class Portfolio(object):
         return self.cash + self.position_value()
 
     def paper_profit(self):
-        return self.positions.profit()
+        return self.positions.paper_profit()
 
+    #TODO
+    """
     def profit(self):
         return self.total_value() - self.max_invest()
+    """
 
     def returns(self):
         return self.total_value() / self.max_invest() - 1.0

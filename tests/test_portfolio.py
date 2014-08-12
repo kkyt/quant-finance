@@ -36,9 +36,9 @@ def test_simple():
     o = Order(symbol='s2', amount=5, price=0.1)
     p.handle_order(o)
 
-    with pytest.raises(Exception) as e:
-        o = Order(symbol='s2', amount=50, price=1000)
-        p.handle_order(o)
+    #don't check cash in handle_order now, so no exception raised
+    o = Order(symbol='s2', amount=50, price=1000)
+    p.handle_order(o)
 
     print p
 
