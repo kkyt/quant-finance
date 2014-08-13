@@ -82,6 +82,6 @@ class Position(DefaultOpenStruct):
         self.price = txn.price
 
         #we're covering a short or closing a position
-        if(self.amount + txn.amount == 0):
+        if(self.amount == 0):
             self.cost = 0
 

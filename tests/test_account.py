@@ -46,6 +46,6 @@ def test_simple():
     t = o.to_transaction()
     a.handle_transaction(t)
     pos = p.positions['s1']
-    assert pos.cost==1019 and pos.reserved==0
+    assert pos.history_cost==1019 and pos.reserved==0 and pos.cost==0
 
 
