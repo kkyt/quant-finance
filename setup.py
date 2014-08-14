@@ -16,6 +16,8 @@ setup(
 
     packages=[
       'quant_finance',
+      'quant_finance.markets',
+      'quant_finance.markets.cn',
     ],
 
     package_data = {
