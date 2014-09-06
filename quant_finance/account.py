@@ -47,3 +47,6 @@ class Account(object):
         self.portfolio.handle_order(odr)
         return odr
 
+    def handle_bar(self, bar):
+        self.portfolio.handle_bar(bar)
+

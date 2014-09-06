@@ -84,4 +84,9 @@ class Position(DefaultOpenStruct):
         #we're covering a short or closing a position
         if(self.amount == 0):
             self.cost = 0
+    
+    def handle_bar(self, bar):
+        if bar.get('symbol') != self.get('symbol'):
+            return
+        self.price = bar.get('price') or bar.get('close')
 

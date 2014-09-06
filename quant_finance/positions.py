@@ -59,3 +59,8 @@ class Positions(DefaultOpenStruct):
         p = self[div.symbol]
         return p.handle_dividend(div)
 
+    def handle_bar(self, bar):
+        p = self.get(bar['symbol'])
+        if p is not None:
+            p.handle_bar(p)
+

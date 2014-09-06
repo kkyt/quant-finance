@@ -93,3 +93,6 @@ class Portfolio(object):
     def commission(self):
         return self.positions.commission()
 
+    def handle_bar(self, bar):
+        self.positions.handle_bar(bar)
+
