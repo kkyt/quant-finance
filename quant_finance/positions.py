@@ -45,14 +45,18 @@ class Positions(DefaultOpenStruct):
                 return False
         return True
 
+    def ensure(self, symbol, **kwargs):
+        if not symbol in self:
+            self[symbol] = Position(symbol=symbol, **kwargs)
+        return self[symbol]
+            
     def handle_transaction(self, txn):
+        #NOTE: MUST handle_order before handle_transaction
         p = self[txn.symbol]
         return p.handle_transaction(txn)
 
     def handle_order(self, odr):
-        if not odr.symbol in self:
-            self[odr.symbol] = Position(symbol=odr.symbol, time=odr.time)
-        p = self[odr.symbol]
+        p = self.ensure(odr.symbol, time=odr.time)
         return p.handle_order(odr)
 
     def handle_dividend(self, div):

@@ -53,7 +53,6 @@ def hit_limit_price(action, bar, last_close, guess=False):
         return 1-rise >= limit
 
 
-'''
 def check_limit_price(direction, price, last_close, time=None, symbol=None, allow_equal=False):
     if time is not None:
         t0 = date_time.to_datetime('1996-12-16')
@@ -75,6 +74,5 @@ def check_limit_price(direction, price, last_close, time=None, symbol=None, allo
         else:
             limit += eps
         return price >= limit
-'''
 
 
