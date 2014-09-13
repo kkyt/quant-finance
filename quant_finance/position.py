@@ -3,6 +3,8 @@
 from kuankr_utils import log, debug
 from kuankr_utils.open_struct import DefaultOpenStruct
 
+from .order import InvalidOrder
+
 class InvalidPosition(StandardError):
     pass
 
@@ -63,11 +65,14 @@ class Position(DefaultOpenStruct):
 
         amount = act.required_amount()
         if amount > self.available_amount():
-            raise Exception('not enough position amount: %s %s' % (self, act))
+            msg = 'not enough position amount: %s %s' % (self, act)
+            return False, msg
+        return True, None
 
     def handle_order(self, odr):
-        self._validate_action(odr)
-
+        ok, err = self._validate_action(odr)
+        if not ok:
+            raise InvalidOrder(err)
         self.reserved += odr.required_amount()
 
     def handle_transaction(self, txn):

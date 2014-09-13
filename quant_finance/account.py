@@ -56,6 +56,14 @@ class Account(object):
         self.portfolio.handle_order(odr)
         return odr
 
+    def handle_data(self, data):
+        if 'bars' in data:
+            bars = data['bars']
+        else:
+            bars = [data]
+        for bar in bars:
+            self.handle_bar(bar)
+
     def handle_bar(self, bar):
         self.portfolio.handle_bar(bar)
 

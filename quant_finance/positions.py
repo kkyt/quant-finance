@@ -66,5 +66,5 @@ class Positions(DefaultOpenStruct):
     def handle_bar(self, bar):
         p = self.get(bar['symbol'])
         if p is not None:
-            p.handle_bar(p)
+            p.handle_bar(bar)
 
