@@ -1,6 +1,7 @@
 #coding:utf8
 
 from quant_finance.markets.cn.name import *
+from quant_finance.markets.cn.symbol import *
 
 def test_name():
     assert normalize_name('ＡＢ c')=='ABC'

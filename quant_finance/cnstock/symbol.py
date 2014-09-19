@@ -2,7 +2,7 @@
 
 import re
 
-from kuankr_utils import log, debug, unicode_utils
+from kuankr_utils import log, debug
 
 PATTERN_STOCK  = 'SH600...|SH601...|SH603...|SH900...|SZ000...|SZ001...|SZ002...|SZ300...|SZ200...' #股票
 PATTERN_FUND   = 'SH18....|SH5000..|SH500180|SH510...|SH000300|SZ18....|SZ159...' #基金
@@ -12,16 +12,6 @@ PATTERN_WARRANT= 'SH0310...|SZ5800...' #权证
 PATTERN_ALL = '|'.join([PATTERN_STOCK, PATTERN_FUND, PATTERN_INDEX, PATTERN_WARRANT])
 
 
-def normalize_name(name):
-    """
-    desc: 股票名规一化,半角,大写,去空格
-    example:
-    -   args: ["＊ＳＴ苏 宁"]
-        ret : "*ST苏宁"
-    """
-    name = unicode_utils.strQ2B(name).replace(' ','').upper()
-    return name
-
 def is_index(symbol):
     """
     desc: symbol是否是指数
@@ -29,7 +19,7 @@ def is_index(symbol):
     -   args: ["SH000001"]
         ret : true
     """
-    if not p.is_index(symbol):
+    if not isinstance(symbol, basestring):
         return False
     return bool(re.match(PATTERN_INDEX, symbol))
 
