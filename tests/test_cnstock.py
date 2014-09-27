@@ -19,12 +19,21 @@ def test_symbol():
 def test_index():
     cases = [ 
         ('1A0001', 'SH000001'), 
+        ('SH1A0001', 'SH000001'), 
         ('1B0001', 'SH000004'),
         ('SZ399001', 'SZ399001'),
         #('399001', 'SZ399001')
     ]
     for old, new in cases:
         assert index_symbol_old_to_new(old)==new
+
+    cases = [ 
+        ('SH1A0001', 'SH000001'), 
+        ('SH1B0001', 'SH000004'),
+        ('SZ399001', 'SZ399001'),
+        #('399001', 'SZ399001')
+    ]
+    for old, new in cases:
         assert index_symbol_new_to_old(new)==old
 
 

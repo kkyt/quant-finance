@@ -47,18 +47,25 @@ def _setup():
             old = INDEXE_SYMBOL_OLD[k][i]
             new = INDEXE_SYMBOL_NEW[k][i]
             INDEXE_SYMBOL_OLD_TO_NEW[k][old] = new
-            INDEXE_SYMBOL_NEW_TO_OLD[k][new] = old
+            INDEXE_SYMBOL_NEW_TO_OLD[k][new] = k + old
         
 
 _setup()
 
+#TODO: SZ index symbol
 def index_symbol_old_to_new(s):
-    if not s in INDEXE_SYMBOL_OLD['SH']:
+    t = s.upper()
+    if t[:2]=='SH':
+        t = t[2:]
+    if not t in INDEXE_SYMBOL_OLD['SH']:
         return s
     else:
-        return INDEXE_SYMBOL_OLD_TO_NEW['SH'][s]
+        return INDEXE_SYMBOL_OLD_TO_NEW['SH'][t]
 
 def index_symbol_new_to_old(s):
+    t = s.upper()
+    if t[:2]=='SH':
+        t = t[2:]
     if not s in INDEXE_SYMBOL_NEW['SH']:
         return s
     else:
