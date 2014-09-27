@@ -1,3 +1,5 @@
+#coding:utf8
+
 from kuankr_utils import log, debug, unicode_utils
 
 def normalize_name(name):
