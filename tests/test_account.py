@@ -4,7 +4,7 @@ from kuankr_utils import log, debug
 
 from quant_finance.order import Order, InvalidOrder
 from quant_finance.lotter import DefaultLotter
-from quant_finance.margin import Margin
+from quant_finance.margin import Margin, MarginNoCheck
 from quant_finance.account import Account
 from quant_finance.portfolio import Portfolio
 from quant_finance.commission import Proportional
@@ -49,3 +49,16 @@ def test_simple():
     assert pos.history_cost==1019 and pos.reserved==0 and pos.cost==0
 
 
+def test_handle_commission():
+    p = Portfolio(cash=10010.0)
+    m = MarginNoCheck()
+    c = Proportional(0.001)
+    l = DefaultLotter(min_lot=1)
+    a = Account(portfolio=p, commission=c, margin=m, lotter=l)
+    o = Order(symbol='s1', price=10, action='buy')
+    a.handle_order(o)
+    t = o.to_transaction()
+    a.handle_transaction(t)
+    assert a.portfolio.cash == 0
+    assert a.portfolio.total_value() == 10000
+    assert a.portfolio.position_value() == 10000

@@ -1,11 +1,12 @@
 from kuankr_utils import log, debug
 
+from quant_finance.commission import Commission
 from .order import InvalidOrder
 
 class Account(object):
     def __init__(self, portfolio=None, commission=None, margin=None, lotter=None):
         self.portfolio = portfolio
-        self.commission = commission
+        self.commission = commission if commission is not None else Commission
         self.margin = margin
         self.lotter = lotter
 
@@ -21,8 +22,8 @@ class Account(object):
         if not 'amount' in odr:
             if odr.direction() > 0:
                 price = odr.get_price()
-                #TODO: commission
                 cash = p.available_cash()
+                cash = self.commission.calc_avail_cash(cash)
                 if 'position' in odr:
                     cash = min(cash, p.total_value() * odr.position)
                 odr.amount = cash / price
